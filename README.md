@@ -4,19 +4,18 @@ Handle all the aspects of push notifications for your app, including remote and 
 
 **All the native iOS notifications features are supported!**
 
->For information regarding proper integration with [react-native-navigation](https://github.com/wix/react-native-navigation), follow [this wiki](https://github.com/wix/react-native-notifications/wiki/Android:-working-with-RNN).
+_For information regarding proper integration with [react-native-navigation](https://github.com/wix/react-native-navigation), follow [this wiki](https://github.com/wix/react-native-notifications/wiki/Android:-working-with-RNN)._
 
 ## Supported Features
 ### iOS
 
-- [Remote notifications](#handling-received-notifications).
-- [Local notifications](#triggering-local-notifications).
-- [Background notifications](#managed-notifications-ios-only).
-- [Managed notifications](#managed-notifications-ios-only) (notifications that can be cleared from the server, like Facebook messenger and Whatsapp web).
-- [PushKit API](#pushkit-api-ios-only) for VoIP and other background messages.
-- [Interactive notifications](#interactive--actionable-notifications-ios-only) that allows you to provide additional functionality to your users outside of your application.
+<img src="https://s3.amazonaws.com/nrjio/interactive.gif" alt="Interactive notifications example" width=350/>
 
-![Interactive notifications example](https://s3.amazonaws.com/nrjio/interactive.gif)
+- Remote (push) notifications
+- Local notifications
+- Background/Managed notifications (notifications that can be cleared from the server, like Facebook messenger and Whatsapp web)
+- PushKit API (for VoIP and other background messages)
+- Interactive notifications (allows you to provide additional functionality to your users outside of your application such as action buttons)
 
 ### Android
 
@@ -550,7 +549,7 @@ Interactive notifications allow you to reply to a message right from the notific
 On the Lock screen and within Notification Center, you swipe from right to left
 to reveal actions. Destructive actions, like trashing an email, are color-coded red. Relatively neutral actions, like dismissing an alert or declining an invitation, are color-coded gray.
 
-For banners, you pull down to reveal actions as buttons. For popups, the actions are immediately visible — the buttons are right there.
+For banners, you pull down to reveal actions as buttons. For popups, the actions are immediately visible ??? the buttons are right there.
 
 You can find more info about interactive notifications [here](http://www.imore.com/interactive-notifications-ios-8-explained).
 
