@@ -1,6 +1,7 @@
 package com.wix.reactnativenotifications.core.notifications;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -25,6 +26,8 @@ import static com.wix.reactnativenotifications.Defs.LOGTAG;
 import static com.wix.reactnativenotifications.Defs.NOTIFICATION_OPENED_EVENT_NAME;
 
 public class LocalNotification implements ILocalNotification {
+
+    private static final String CHANNEL_ID = "default_channel";
 
     private final Context mContext;
     private final NotificationProps mNotificationProps;
@@ -130,15 +133,37 @@ public class LocalNotification implements ILocalNotification {
 
     protected Notification.Builder getNotificationBuilder(PendingIntent intent) {
         final Integer icon = mNotificationProps.getIcon();
+        final NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        final Notification.Builder builder = new Notification.Builder(mContext)
-                .setContentTitle(mNotificationProps.getTitle())
-                .setContentText(mNotificationProps.getBody())
-                .setSmallIcon(icon != null ? icon : mContext.getApplicationContext().getApplicationInfo().icon)
-                .setSound(mNotificationProps.getSound())
-                .setContentIntent(intent)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setAutoCancel(true);
+        final Notification.Builder builder;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_HIGH);
+            // Configure the notification channel.
+            notificationChannel.setDescription("Notification channel for Messages and important announcements.");
+            notificationChannel.enableLights(true);
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+
+            builder = new Notification.Builder(mContext, CHANNEL_ID)
+                    .setContentTitle(mNotificationProps.getTitle())
+                    .setContentText(mNotificationProps.getBody())
+                    .setSmallIcon(icon != null ? icon : mContext.getApplicationContext().getApplicationInfo().icon)
+                    .setSound(mNotificationProps.getSound())
+                    .setContentIntent(intent)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setAutoCancel(true);
+        }else {
+            builder = new Notification.Builder(mContext)
+                    .setContentTitle(mNotificationProps.getTitle())
+                    .setContentText(mNotificationProps.getBody())
+                    .setSmallIcon(icon != null ? icon : mContext.getApplicationContext().getApplicationInfo().icon)
+                    .setSound(mNotificationProps.getSound())
+                    .setContentIntent(intent)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setAutoCancel(true);
+        }
+
+
 
         final Integer color = mNotificationProps.getColor();
 
